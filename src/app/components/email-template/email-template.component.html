@@ -1,18 +1,63 @@
-<div class="container-fluid py-3">
-  <div class="row my-3">
-    <div class="col">
-      <label for="name" class="form-label">Name</label>
-      <input type="text" class="form-control form-control-sm" id="name" />
+<div class="modal-header">
+  <h4 *ngIf="isExistingTemplate" class="modal-title">{{ templateData._id }}</h4>
+  <button
+    type="button"
+    class="btn-close"
+    aria-label="Close"
+    (click)="activeModal.dismiss('Cross click')"
+  ></button>
+</div>
+<div class="modal-body">
+  <div class="container-fluid py-3">
+    <div class="row my-3">
+      <div class="col">
+        <label for="name" class="form-label">Name</label>
+        <input
+          type="text"
+          class="form-control form-control-sm"
+          id="name"
+          [(ngModel)]="templateData.name"
+        />
+      </div>
     </div>
-  </div>
-  <div class="row my-3">
-    <div class="col">
-      <label for="content" class="form-label">Content</label>
-      <textarea
-        class="form-control form-control-sm"
-        id="content"
-        rows="15"
-      ></textarea>
+    <div class="row my-3">
+      <div class="col">
+        <label for="description" class="form-label">Description</label>
+        <input
+          type="text"
+          class="form-control form-control-sm"
+          id="description"
+          [(ngModel)]="templateData.description"
+        />
+      </div>
     </div>
+    <div class="row my-3">
+      <div class="col">
+        <label for="content" class="form-label"
+          >Content
+          <small class="text-muted"
+            >(Please use handlebars suntax for templating!)</small
+          ></label
+        >
+        <textarea
+          class="form-control form-control-sm"
+          id="content"
+          rows="15"
+          [(ngModel)]="templateData.content"
+        ></textarea>
+      </div>
+    </div>
+    <button type="button" class="btn btn-primary" (click)="updateTemplate()">
+      Update
+    </button>
   </div>
+</div>
+<div class="modal-footer">
+  <button
+    type="button"
+    class="btn btn-outline-dark"
+    (click)="activeModal.close('Close click')"
+  >
+    Close
+  </button>
 </div>
