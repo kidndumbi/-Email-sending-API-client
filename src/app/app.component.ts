@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { EmailTemplateModel } from './models/emailTemplate.model';
+import { EmailTemplateService } from './services/email-template.service';
+import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -6,10 +8,16 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
-  constructor(private modalService: NgbModal) {}
+export class AppComponent implements OnInit {
+  emailTemplates: EmailTemplateModel[] = [];
 
-  public open(modal: any): void {
-    this.modalService.open(modal);
+  constructor(private emailTemplateservice: EmailTemplateService) {
+    this.emailTemplateservice.getTemplates();
+  }
+
+  ngOnInit(): void {
+    this.emailTemplateservice.templateList$.subscribe((templates) => {
+      this.emailTemplates = templates;
+    });
   }
 }
