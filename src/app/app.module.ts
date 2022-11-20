@@ -8,6 +8,8 @@ import { AppComponent } from './app.component';
 import { EmailTemplateComponent } from './components/email-template/email-template.component';
 import { TemplateListComponent } from './components/template-list/template-list.component';
 import { TemplateListItemComponent } from './components/template-list/template-list-item/template-list-item.component';
+import { FormsModule } from '@angular/forms';
+import { NavComponent } from './components/nav/nav.component';
 
 @NgModule({
   declarations: [
@@ -15,8 +17,15 @@ import { TemplateListItemComponent } from './components/template-list/template-l
     EmailTemplateComponent,
     TemplateListComponent,
     TemplateListItemComponent,
+    NavComponent,
   ],
-  imports: [BrowserModule, HttpClientModule, AppRoutingModule, NgbModule],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    HttpClientModule,
+    AppRoutingModule,
+    NgbModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })

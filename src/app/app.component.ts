@@ -1,7 +1,6 @@
 import { EmailTemplateModel } from './models/emailTemplate.model';
 import { EmailTemplateService } from './services/email-template.service';
 import { Component, OnInit } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-root',
@@ -19,5 +18,13 @@ export class AppComponent implements OnInit {
     this.emailTemplateservice.templateList$.subscribe((templates) => {
       this.emailTemplates = templates;
     });
+  }
+
+  onUpdateTemplate(templateData: EmailTemplateModel) {
+    this.emailTemplateservice.updateTemplate(templateData);
+  }
+
+  onCreateTemplate(templateData: EmailTemplateModel) {
+    this.emailTemplateservice.createTemplate(templateData);
   }
 }

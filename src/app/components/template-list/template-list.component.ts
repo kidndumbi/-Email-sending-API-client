@@ -1,10 +1,14 @@
+import { EmailTemplateComponent } from './../email-template/email-template.component';
 import {
   Component,
+  EventEmitter,
   Input,
   OnChanges,
   OnInit,
+  Output,
   SimpleChanges,
 } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EmailTemplateModel } from 'src/app/models/emailTemplate.model';
 
 @Component({
@@ -12,12 +16,19 @@ import { EmailTemplateModel } from 'src/app/models/emailTemplate.model';
   templateUrl: './template-list.component.html',
   styleUrls: ['./template-list.component.scss'],
 })
-export class TemplateListComponent implements OnInit, OnChanges {
+export class TemplateListComponent {
   @Input() emailTemplates: EmailTemplateModel[] = [];
+  @Output() onUpdateTemplate = new EventEmitter<EmailTemplateModel>();
 
-  ngOnInit(): void {}
+  constructor(private modalService: NgbModal) {}
 
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log('in here? ', this.emailTemplates);
+  openModal(templateData: EmailTemplateModel) {
+    const modalRef = this.modalService.open(EmailTemplateComponent);
+    const modalComponent = modalRef.componentInstance as EmailTemplateComponent;
+    modalComponent.isExistingTemplate = true;
+    modalComponent.templateData = templateData;
+    modalComponent.onTemplateUpdate.subscribe((data) => {
+      this.onUpdateTemplate.emit(data);
+    });
   }
 }
