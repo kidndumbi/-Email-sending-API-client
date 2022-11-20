@@ -3,5 +3,7 @@
   <app-template-list
     [emailTemplates]="emailTemplates"
     (onUpdateTemplate)="onUpdateTemplate($event)"
+    (onUpdateDelete)="onDeleteTemplate($event)"
   ></app-template-list>
 </div>
+<notifier-container></notifier-container>
