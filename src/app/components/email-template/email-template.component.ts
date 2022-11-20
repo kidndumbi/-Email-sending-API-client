@@ -22,11 +22,17 @@ export class EmailTemplateComponent {
   @Input() isExistingTemplate = false;
 
   @Output() onTemplateUpdate = new EventEmitter<EmailTemplateModel>();
+  @Output() onTemplatedelete = new EventEmitter<string>();
 
   constructor(public activeModal: NgbActiveModal) {}
 
   updateTemplate() {
     this.onTemplateUpdate.emit(this.templateData);
+    this.activeModal.close('Close click');
+  }
+
+  deleteTemplate() {
+    this.onTemplatedelete.emit(this.templateData._id);
     this.activeModal.close('Close click');
   }
 }

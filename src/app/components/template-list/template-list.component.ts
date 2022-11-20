@@ -19,6 +19,7 @@ import { EmailTemplateModel } from 'src/app/models/emailTemplate.model';
 export class TemplateListComponent {
   @Input() emailTemplates: EmailTemplateModel[] = [];
   @Output() onUpdateTemplate = new EventEmitter<EmailTemplateModel>();
+  @Output() onUpdateDelete = new EventEmitter<string>();
 
   constructor(private modalService: NgbModal) {}
 
@@ -29,6 +30,9 @@ export class TemplateListComponent {
     modalComponent.templateData = templateData;
     modalComponent.onTemplateUpdate.subscribe((data) => {
       this.onUpdateTemplate.emit(data);
+    });
+    modalComponent.onTemplatedelete.subscribe((_id) => {
+      this.onUpdateDelete.emit(_id);
     });
   }
 }

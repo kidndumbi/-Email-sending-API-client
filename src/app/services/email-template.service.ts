@@ -10,28 +10,54 @@ export class EmailTemplateService {
   private templateList = new BehaviorSubject<EmailTemplateModel[]>([]);
   templateList$ = this.templateList.asObservable();
 
-  domain = '';
+  domain = 'http://localhost:3000';
 
   constructor(private http: HttpClient) {}
 
   async getTemplates() {
-    const templates = await lastValueFrom(
-      this.http.get<EmailTemplateModel[]>(this.domain + '/api/templates')
-    );
+    try {
+      const templates = await lastValueFrom(
+        this.http.get<EmailTemplateModel[]>(this.domain + '/api/templates')
+      );
 
-    this.templateList.next(templates);
+      this.templateList.next(templates);
+    } catch (error) {
+      throw error;
+    }
   }
 
   async updateTemplate(emailTemplatedata: EmailTemplateModel) {
-    await lastValueFrom(
-      this.http.patch(this.domain + '/api/updateTemplate', emailTemplatedata)
-    );
+    try {
+      await lastValueFrom(
+        this.http.patch(this.domain + '/api/updateTemplate', emailTemplatedata)
+      );
+    } catch (error) {
+      throw error;
+    }
   }
 
   async createTemplate(emailTemplatedata: EmailTemplateModel) {
     const { _id, ...templateDataNoId } = emailTemplatedata;
-    const createddata = await lastValueFrom(
-      this.http.post(this.domain + '/api/createTemplate', templateDataNoId)
-    );
+
+    try {
+      const createddata = await lastValueFrom(
+        this.http.post(this.domain + '/api/createTemplate', templateDataNoId)
+      );
+
+      this.getTemplates();
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async deleteTemplate(_id: string) {
+    try {
+      await lastValueFrom(
+        this.http.delete(this.domain + '/api/deleteTemplate/' + _id)
+      );
+      this.getTemplates();
+    } catch (error) {
+      throw error;
+    }
   }
 }
