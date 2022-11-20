@@ -10,7 +10,7 @@ export class EmailTemplateService {
   private templateList = new BehaviorSubject<EmailTemplateModel[]>([]);
   templateList$ = this.templateList.asObservable();
 
-  domain = 'http://localhost:3000';
+  domain = '';
 
   constructor(private http: HttpClient) {}
 
