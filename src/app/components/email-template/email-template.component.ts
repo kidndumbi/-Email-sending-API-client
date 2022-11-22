@@ -10,6 +10,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ConfirmationModalService } from 'src/app/services/confirmation-modal.service';
 
 @Component({
   selector: 'app-email-template',
@@ -24,7 +25,10 @@ export class EmailTemplateComponent {
   @Output() onTemplateUpdate = new EventEmitter<EmailTemplateModel>();
   @Output() onTemplatedelete = new EventEmitter<string>();
 
-  constructor(public activeModal: NgbActiveModal) {}
+  constructor(
+    public activeModal: NgbActiveModal,
+    private confirmationModalService: ConfirmationModalService
+  ) {}
 
   updateTemplate() {
     this.onTemplateUpdate.emit(this.templateData);
@@ -34,5 +38,12 @@ export class EmailTemplateComponent {
   deleteTemplate() {
     this.onTemplatedelete.emit(this.templateData._id);
     this.activeModal.close('Close click');
+  }
+
+  async openConfirm() {
+    const modalRef = await this.confirmationModalService.open();
+    modalRef.ok.subscribe((ok) => {
+      this.deleteTemplate();
+    });
   }
 }
