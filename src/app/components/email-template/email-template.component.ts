@@ -40,9 +40,8 @@ export class EmailTemplateComponent {
     this.activeModal.close('Close click');
   }
 
-  async openConfirm() {
-    const modalRef = await this.confirmationModalService.open();
-    modalRef.ok.subscribe((ok) => {
+  openConfirm() {
+    this.confirmationModalService.open().ok.subscribe((ok) => {
       this.deleteTemplate();
     });
   }
